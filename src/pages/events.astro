@@ -3,10 +3,19 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import EventCard from '../components/EventCard.astro';
-import { splitEvents } from '../data/events';
+import { splitEvents, archiveUrl } from '../data/events';
 import { fpra } from '../data/site';
 
 const { upcoming, past } = splitEvents();
+
+/**
+ * The chapter's Eventbrite archive runs back to 2020. Listing all of it buries
+ * the page, so show the most recent programs and send the rest to Eventbrite.
+ */
+const PAST_LIMIT = 8;
+const recentPast = past.slice(0, PAST_LIMIT);
+const olderCount = past.length - recentPast.length;
+const oldestYear = past.length > 0 ? past[past.length - 1].date.slice(0, 4) : '';
 ---
 
 <BaseLayout
@@ -47,11 +56,33 @@ const { upcoming, past } = splitEvents();
         <SectionHeading
           eyebrow="Archive"
           title="Past events"
-          lead="A look at recent chapter programming."
+          lead={`The chapter’s ${PAST_LIMIT} most recent programs.`}
         />
         <div class="mt-12 grid gap-5">
-          {past.map((event) => <EventCard event={event} past />)}
+          {recentPast.map((event) => <EventCard event={event} past />)}
         </div>
+
+        {olderCount > 0 && (
+          <p class="mt-8 text-royal">
+            {olderCount} earlier {olderCount === 1 ? 'program' : 'programs'}, going back to{' '}
+            {oldestYear}
+            {archiveUrl ? (
+              <Fragment>
+                , are listed on{' '}
+                <a
+                  href={archiveUrl}
+                  target="_blank"
+                  rel="noopener"
+                  class="font-bold text-navy underline underline-offset-4 hover:text-royal"
+                >
+                  the chapter&rsquo;s Eventbrite page
+                </a>.
+              </Fragment>
+            ) : (
+              <Fragment>, are not listed here.</Fragment>
+            )}
+          </p>
+        )}
       </div>
     </section>
   )}

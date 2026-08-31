@@ -6,20 +6,25 @@
  * last-known-good response so a failed fetch degrades instead of breaking the
  * build. See `src/lib/eventbrite.ts` for the request and secret handling.
  */
-import { fetchEvents, type ChapterEvent, type EventCache } from '../lib/eventbrite';
+import {
+  fetchEvents,
+  type ChapterEvent,
+  type EventCache,
+  type FetchResult,
+} from '../lib/eventbrite';
 import cache from './events-cache.json';
 
 export type { ChapterEvent };
 
 const CACHE_PATH = 'src/data/events-cache.json';
 
-function fallback(reason: string): ChapterEvent[] {
+function fallback(reason: string): FetchResult {
   const snapshot = cache as EventCache;
   const age = snapshot.fetchedAt ? `last fetched ${snapshot.fetchedAt}` : 'never fetched';
   console.warn(
     `[events] ${reason} — falling back to cached data (${snapshot.events.length} events, ${age}).`,
   );
-  return snapshot.events;
+  return { events: snapshot.events, archiveUrl: snapshot.archiveUrl ?? null };
 }
 
 /**
@@ -27,14 +32,15 @@ function fallback(reason: string): ChapterEvent[] {
  * to fall back to. Skipped in dev, where rewriting a file that is imported
  * would retrigger HMR in a loop. Never contains the token.
  */
-async function writeCache(events: ChapterEvent[]): Promise<void> {
+async function writeCache(result: FetchResult): Promise<void> {
   if (import.meta.env.DEV) return;
   try {
     const { writeFile } = await import('node:fs/promises');
     const payload: EventCache = {
       fetchedAt: new Date().toISOString(),
       source: 'eventbrite',
-      events,
+      archiveUrl: result.archiveUrl,
+      events: result.events,
     };
     await writeFile(CACHE_PATH, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
   } catch (error) {
@@ -43,7 +49,7 @@ async function writeCache(events: ChapterEvent[]): Promise<void> {
   }
 }
 
-async function loadEvents(): Promise<ChapterEvent[]> {
+async function loadEvents(): Promise<FetchResult> {
   const rawToken = process.env.EVENTBRITE_TOKEN;
 
   if (!rawToken || rawToken.trim() === '') {
@@ -61,7 +67,8 @@ async function loadEvents(): Promise<ChapterEvent[]> {
   console.info(`[events] token present (${token.length} chars).`);
 
   try {
-    const events = await fetchEvents(token);
+    const result = await fetchEvents(token);
+    const events = result.events;
     if (events.length === 0) {
       // An empty list is more likely a wrong ID or a filtered-out status than
       // a genuinely empty calendar, so prefer the cache if it has anything.
@@ -71,15 +78,23 @@ async function loadEvents(): Promise<ChapterEvent[]> {
       }
     }
     console.info(`[events] fetched ${events.length} event(s) from Eventbrite.`);
-    await writeCache(events);
-    return events;
+    await writeCache(result);
+    return result;
   } catch (error) {
     // Never interpolate the token; only the message is surfaced.
     return fallback(`Eventbrite fetch failed: ${(error as Error).message}`);
   }
 }
 
-export const events: ChapterEvent[] = await loadEvents();
+const loaded = await loadEvents();
+
+export const events: ChapterEvent[] = loaded.events;
+
+/**
+ * The chapter's public Eventbrite page, for linking to programs older than
+ * the site lists. Null until a fetch supplies it.
+ */
+export const archiveUrl: string | null = loaded.archiveUrl;
 
 /** Local-midnight Date for an ISO `YYYY-MM-DD` string (avoids UTC drift). */
 function toLocalDate(iso: string): Date {

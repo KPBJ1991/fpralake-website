@@ -27,10 +27,22 @@ export type ChapterEvent = {
   kind?: string;
 };
 
+export type FetchResult = {
+  events: ChapterEvent[];
+  /** Organizer's public Eventbrite page, or null if the API did not supply it. */
+  archiveUrl: string | null;
+};
+
 export type EventCache = {
   /** ISO timestamp of the last successful fetch, or null if never. */
   fetchedAt: string | null;
   source: string;
+  /**
+   * The organizer's public Eventbrite page, reported by the API rather than
+   * constructed — the public URL slug cannot be derived from the numeric id.
+   * Null until a fetch supplies it.
+   */
+  archiveUrl?: string | null;
   events: ChapterEvent[];
 };
 
@@ -70,6 +82,7 @@ type EventbriteEvent = {
   online_event?: boolean | null;
   status?: string | null;
   venue?: { name?: string | null; address?: { city?: string | null } | null } | null;
+  organizer?: { url?: string | null; name?: string | null } | null;
 };
 
 /** '2026-09-17T11:30:00' -> '11:30 a.m.' (Eventbrite `local` is unzoned). */
@@ -151,7 +164,7 @@ async function fetchAllPages(
     const url = new URL(endpoint);
     if (useStatusFilter) url.searchParams.set('status', STATUSES);
     url.searchParams.set('order_by', 'start_desc');
-    url.searchParams.set('expand', 'venue');
+    url.searchParams.set('expand', 'venue,organizer');
     if (continuation) url.searchParams.set('continuation', continuation);
 
     const response = await getJson(url.toString(), token);
@@ -200,7 +213,7 @@ async function fetchAllPages(
  * attempt returned is logged. Throws only if no attempt reached the API at
  * all; callers handle the fallback.
  */
-export async function fetchEvents(token: string): Promise<ChapterEvent[]> {
+export async function fetchEvents(token: string): Promise<FetchResult> {
   const attempts: string[] = [];
   const errors: unknown[] = [];
   let anySucceeded = false;
@@ -222,7 +235,13 @@ export async function fetchEvents(token: string): Promise<ChapterEvent[]> {
 
         if (mapped.length > 0) {
           console.info(`[events] source: ${label} endpoint.`);
-          return mapped.sort((a, b) => b.date.localeCompare(a.date));
+          // Any event carries the organizer's public page; take the first.
+          const archiveUrl =
+            raw.find((e) => e.organizer?.url)?.organizer?.url?.trim() || null;
+          return {
+            events: mapped.sort((a, b) => b.date.localeCompare(a.date)),
+            archiveUrl,
+          };
         }
       } catch (error) {
         attempts.push(`${label}: ${(error as Error).message}`);
@@ -239,7 +258,7 @@ export async function fetchEvents(token: string): Promise<ChapterEvent[]> {
   // cause (wrong ID, drafts only, genuinely empty calendar) is visible.
   console.warn(`[events] no events found. Probes: ${attempts.join(' | ')}`);
   await reportAccessibleOrganizations(token);
-  return [];
+  return { events: [], archiveUrl: null };
 }
 
 /**
