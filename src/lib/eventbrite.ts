@@ -145,7 +145,24 @@ async function fetchAllPages(endpoint: string, token: string): Promise<Eventbrit
 
     const response = await getJson(url.toString(), token);
     if (!response.ok) {
-      const error = new Error(`Eventbrite responded ${response.status} ${response.statusText}`);
+      // Surface Eventbrite's own error code. A bare 401 cannot distinguish an
+      // expired token from the wrong key type from insufficient scope, and
+      // that distinction is what makes the failure actionable. The error body
+      // describes the rejection; it never echoes the token.
+      let detail = '';
+      try {
+        const body = (await response.json()) as {
+          error?: string;
+          error_description?: string;
+        };
+        const parts = [body?.error, body?.error_description].filter(Boolean);
+        if (parts.length > 0) detail = ` (${parts.join(': ')})`;
+      } catch {
+        // Non-JSON body — the status alone will have to do.
+      }
+      const error = new Error(
+        `Eventbrite responded ${response.status} ${response.statusText}${detail}`,
+      );
       (error as Error & { status?: number }).status = response.status;
       throw error;
     }

@@ -44,11 +44,21 @@ async function writeCache(events: ChapterEvent[]): Promise<void> {
 }
 
 async function loadEvents(): Promise<ChapterEvent[]> {
-  const token = process.env.EVENTBRITE_TOKEN;
+  const rawToken = process.env.EVENTBRITE_TOKEN;
 
-  if (!token) {
+  if (!rawToken || rawToken.trim() === '') {
     return fallback('EVENTBRITE_TOKEN is not set');
   }
+
+  // A secret saved with `echo` carries a trailing newline, which Eventbrite
+  // rejects as malformed. Trim rather than fail on something so easy to hit.
+  const token = rawToken.trim();
+  if (token !== rawToken) {
+    console.warn('[events] EVENTBRITE_TOKEN had surrounding whitespace; trimmed.');
+  }
+  // Shape only — never the value. Separates a truncated or padded secret from
+  // a genuinely wrong one without exposing anything.
+  console.info(`[events] token present (${token.length} chars).`);
 
   try {
     const events = await fetchEvents(token);
