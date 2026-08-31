@@ -1,5 +1,365 @@
 {
-  "fetchedAt": "2026-08-31T21:24:10.806Z",
+  "fetchedAt": "2026-08-31T21:26:57.127Z",
   "source": "eventbrite",
-  "events": []
+  "events": [
+    {
+      "title": "Managing Expectations for Media Relations Results With Your Leaders/Clients",
+      "date": "2026-07-29",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Lake Sumter State College, Leesburg",
+      "description": "In this presentation, we will talk about how to navigate honest conversations with your leadership, how to redirect unrealistic asks...",
+      "registerUrl": "https://www.eventbrite.com/e/managing-expectations-for-media-relations-results-with-your-leadersclients-tickets-1994146339382"
+    },
+    {
+      "title": "AI in Action for Communicators",
+      "date": "2026-04-06",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Explore practical AI tools to streamline communications, enhance content, boost accessibility &  improve efficiency while maintaining trust.",
+      "registerUrl": "https://www.eventbrite.com/e/ai-in-action-for-communicators-tickets-1985738371925"
+    },
+    {
+      "title": "Your Hero’s Journey: Answering the AI Call to Adventure",
+      "date": "2026-01-29",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Join us to learn how to leverage AI to accelerate your work and protect your stakeholders.",
+      "registerUrl": "https://www.eventbrite.com/e/your-heros-journey-answering-the-ai-call-to-adventure-tickets-1980507916492"
+    },
+    {
+      "title": "Privacy, Publicity, and Copyright in the Age of AI",
+      "date": "2025-11-17",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Christopher Heath of News 6 & UCF explores how privacy, IP, and copyright laws intersect with AI in PR, branding, and ethics.",
+      "registerUrl": "https://www.eventbrite.com/e/privacy-publicity-and-copyright-in-the-age-of-ai-tickets-1948797558959"
+    },
+    {
+      "title": "Newsjacking vs. Newsjunk: The Power of Strategic Storytelling",
+      "date": "2025-10-22",
+      "time": "12 p.m. – 1:30 p.m.",
+      "location": "Lake-Sumter State College, Leesburg",
+      "description": "In today’s fast-paced media landscape, jumping on trending topics can feel like a necessity for brands. But how can you make sure your parti",
+      "registerUrl": "https://www.eventbrite.com/e/newsjacking-vs-newsjunk-the-power-of-strategic-storytelling-tickets-1708620703519"
+    },
+    {
+      "title": "FPRA Lake Presents Getting it Write with Adam Myrick",
+      "date": "2025-09-17",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Learn to write clear, concise, AP-style copy that cuts through the noise—no jargon, just connection.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-presents-getting-it-write-with-adam-myrick-tickets-1645196750769"
+    },
+    {
+      "title": "Lights, Camera, Connection: Media Interviews that Deliver a Message",
+      "date": "2025-02-20",
+      "time": "12 p.m. – 1:30 p.m.",
+      "location": "Lake Sumter State College, Leesburg",
+      "description": "How would you fare if your organization’s future depended on your success in a two-minute interview?",
+      "registerUrl": "https://www.eventbrite.com/e/lights-camera-connection-media-interviews-that-deliver-a-message-tickets-1245268685159"
+    },
+    {
+      "title": "Resilience and Recovery:  Communication Lessons from Helene and Milton",
+      "date": "2025-01-23",
+      "time": "8:30 a.m. – 10 a.m.",
+      "location": "330 US-301, Sumterville",
+      "description": "FPRA Lake & SECO Energy present an engaging discussion on the communication lessons learned from back-to-back storms in fall 2024.",
+      "registerUrl": "https://www.eventbrite.com/e/resilience-and-recovery-communication-lessons-from-helene-and-milton-tickets-1152514183949"
+    },
+    {
+      "title": "Results-Driven Communication",
+      "date": "2024-11-14",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Gamification and Digital Tactics in a Mental Health Awareness Case Study",
+      "registerUrl": "https://www.eventbrite.com/e/results-driven-communication-tickets-1067337608519"
+    },
+    {
+      "title": "FPRA Lake: Board Installation and Social",
+      "date": "2024-08-26",
+      "time": "6 p.m. – 8 p.m.",
+      "location": "Lake-Sumter State College, Leesburg",
+      "description": "Enjoy light refreshments as we celebrate the installation of the FPRA Lake County Chapter's 2024-25 Board!",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-board-installation-and-social-tickets-961469720817"
+    },
+    {
+      "title": "FPRA Lake: Communicating Change-Overcoming Barriers and Building Confidence",
+      "date": "2024-07-17",
+      "time": "11:45 a.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Bo Breuklander shares top tips on how to identify obstacles to successful outcomes with your primary stakeholders and how to measure impact.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-communicating-change-overcoming-barriers-and-building-confidence-tickets-940592867587"
+    },
+    {
+      "title": "FPRA Lake: Ignite Your Brand With Community Engagement",
+      "date": "2024-06-19",
+      "time": "11:45 a.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Chris Gent, APR, CPRC, shares the 10 secrets to success for building strong, positive relationships with the community.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-ignite-your-brand-with-community-engagement-tickets-907050932757"
+    },
+    {
+      "title": "Your Role in Leadership When You Can't Control Your Results",
+      "date": "2024-05-15",
+      "time": "11:45 a.m. – 1 p.m.",
+      "location": "Lake-Sumter State College, Leesburg",
+      "description": "There's a mindset that's sabotaging our faithfulness as leaders, one that ties our success to outcomes we can’t control.",
+      "registerUrl": "https://www.eventbrite.com/e/your-role-in-leadership-when-you-cant-control-your-results-tickets-884135381727"
+    },
+    {
+      "title": "FPRA Lake: Declutter Your Digital Life",
+      "date": "2024-04-17",
+      "time": "11:45 a.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Join us as we have an online session with tips to 10X your productivity and peacefulness. Take back control of your digital life!",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-declutter-your-digital-life-tickets-866807924837"
+    },
+    {
+      "title": "The Art of PR Planning",
+      "date": "2024-03-20",
+      "time": "11:30 a.m. – 1 p.m.",
+      "location": "Lake-Sumter State College - South Lake Campus, Clermont",
+      "description": "Planning is essential in all aspects of business – including PR.  Join Jennifer Moss Wilson, APR, CPRC, as we delve into planning!",
+      "registerUrl": "https://www.eventbrite.com/e/the-art-of-pr-planning-tickets-848286015307"
+    },
+    {
+      "title": "FPRA Lake: Going Viral With Vegas",
+      "date": "2024-02-28",
+      "time": "11:45 a.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Join us as we have an online Q&A session with one of America’s top government social media teams from the City of Las Vegas.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-going-viral-with-vegas-tickets-808228612537"
+    },
+    {
+      "title": "FPRA Lake: Making a Multicultural Connection with Jose Luis Dieppa",
+      "date": "2024-01-17",
+      "time": "11:30 a.m. – 1 p.m.",
+      "location": "City of Tavares Utility Administration Building",
+      "description": "Public relations practitioners should integrate multicultural strategy in their everyday campaigns.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-making-a-multicultural-connection-with-jose-luis-dieppa-tickets-763484331187"
+    },
+    {
+      "title": "FPRA Lake: Ignite Your Brand With Community Engagement",
+      "date": "2023-12-20",
+      "time": "11:45 a.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Chris Gent, APR, CPRC, shares the 10 secrets to success for building strong, positive relationships with the community.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-ignite-your-brand-with-community-engagement-tickets-768323766067"
+    },
+    {
+      "title": "Innovative Communications: Using Digital Tools to Reach your Audience",
+      "date": "2023-11-15",
+      "time": "7:30 a.m. – 9 a.m.",
+      "location": "Lake Sumter State College Health Sciences Center, Leesburg",
+      "description": "The workspace has changed, and effectively communicating with remote or hybrid employees is more critical than ever.",
+      "registerUrl": "https://www.eventbrite.com/e/innovative-communications-using-digital-tools-to-reach-your-audience-tickets-743687187397"
+    },
+    {
+      "title": "FPRA Lake: The Trust Transformation with Roy Reid, APR, CPRC, MCPC",
+      "date": "2023-10-18",
+      "time": "11:30 a.m. – 1 p.m.",
+      "location": "City of Tavares Utility Administration Building",
+      "description": "People can make meaningful changes in their business and community by taking immediate and intentional steps through Trust Transformation.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-the-trust-transformation-with-roy-reid-apr-cprc-mcpc-tickets-733152608187"
+    },
+    {
+      "title": "FPRA LAKE: Explore the Transformative Potential of AI",
+      "date": "2023-08-23",
+      "time": "12 p.m. – 1:30 p.m.",
+      "location": "Online",
+      "description": "Join us for an exciting online event, learning mind-blowing possibilities  of ChatGPT and AI, transforming ways to connect with audiences!",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-explore-the-transformative-potential-of-ai-tickets-696197654927"
+    },
+    {
+      "title": "FPRA Lake: Crisis Communications-Lessons learned for Hurricane Season",
+      "date": "2023-07-19",
+      "time": "11:30 a.m. – 1 p.m.",
+      "location": "City of Tavares Utility Administration Building",
+      "description": "Communication lessons shared by FPRA Lake member Sara Lux from living in the trenches after Hurricane Ian devastated SWFL for several weeks.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-crisis-communications-lessons-learned-for-hurricane-season-tickets-677699396137"
+    },
+    {
+      "title": "“High-Performance Leadership in High-Stress Environments.”",
+      "date": "2023-03-22",
+      "time": "11:30 a.m. – 1 p.m.",
+      "location": "City of Tavares Utility Administration Building",
+      "description": "FPRA Lake County presents its FEBRUARY professional programming. Non Members are encouraged to attend. RSVP required.",
+      "registerUrl": "https://www.eventbrite.com/e/high-performance-leadership-in-high-stress-environments-tickets-534019375327"
+    },
+    {
+      "title": "Connecting with your audience through storytelling",
+      "date": "2023-01-18",
+      "time": "11:30 a.m. – 1 p.m.",
+      "location": "City of Tavares Utility Administration Building",
+      "description": "Lea is an inspirational speaker who will pull you into an adventure you will never forget down a road you never traveled.",
+      "registerUrl": "https://www.eventbrite.com/e/connecting-with-your-audience-through-storytelling-tickets-503589468657"
+    },
+    {
+      "title": "FPRA Lake Professional Programming - NOV 2022",
+      "date": "2022-11-16",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Experiencing decreased publishing reach for PR? Learn how to use first party data to activate positive press.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-professional-programming-nov-2022-tickets-465091831187"
+    },
+    {
+      "title": "Branding Yourself on Instagram to Support Your Career Goals",
+      "date": "2022-10-19",
+      "time": "12 p.m. – 1:30 p.m.",
+      "location": "Online",
+      "description": "Learn how to craft your best Instagram profile to create a content strategy that ensures you stand out in your industry.",
+      "registerUrl": "https://www.eventbrite.com/e/branding-yourself-on-instagram-to-support-your-career-goals-tickets-427154329097"
+    },
+    {
+      "title": "FPRA Lake Board Installation",
+      "date": "2022-09-14",
+      "time": "5:30 p.m. – 8 p.m.",
+      "location": "Lake County Museum of Art, Tavares",
+      "description": "Come celebrate your new 2022 - 23 FPRA Lake Board as they are installed by FPRA State President Jay Morgan-Schleuning.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-board-installation-tickets-405291546927"
+    },
+    {
+      "title": "Declutter Your Life!  At Work and Home",
+      "date": "2022-07-20",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Thinking critically about the clutter in your life is the first step  toward  improving organization and productivity.",
+      "registerUrl": "https://www.eventbrite.com/e/declutter-your-life-at-work-and-home-tickets-373917075037"
+    },
+    {
+      "title": "Mindful Resilience in PR",
+      "date": "2022-05-18",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "A mindfulness practice can be a strategy for approaching our work and relationships with a clearer lens of observation and insight .",
+      "registerUrl": "https://www.eventbrite.com/e/mindful-resilience-in-pr-tickets-330112544507"
+    },
+    {
+      "title": "FPRA Lake Chapter April Social",
+      "date": "2022-04-20",
+      "time": "6 p.m. – 8 p.m.",
+      "location": "The Crazy Gator, Eustis",
+      "description": "Unlock some  fun and join for our April FPRA Lake Social",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-chapter-april-social-tickets-305120492607"
+    },
+    {
+      "title": "Super Sneaky Strategies for Using LinkedIn",
+      "date": "2022-03-16",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Find out little-known ways to use LinkedIn that aren’t always obvious.",
+      "registerUrl": "https://www.eventbrite.com/e/super-sneaky-strategies-for-using-linkedin-tickets-273578700257"
+    },
+    {
+      "title": "Crossing the Finish Line:  Craft Your Best Possible Image Award Entry",
+      "date": "2022-02-02",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Craft your best possible FPRA Image Award entry.",
+      "registerUrl": "https://www.eventbrite.com/e/crossing-the-finish-line-craft-your-best-possible-image-award-entry-tickets-253710654397"
+    },
+    {
+      "title": "Improve Your Relationships with Journalists",
+      "date": "2022-01-19",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Improve your  performance when trying to get positive news coverage for  the organizations you support.",
+      "registerUrl": "https://www.eventbrite.com/e/improve-your-relationships-with-journalists-tickets-232991081597"
+    },
+    {
+      "title": "FPRA Lake Holiday Social",
+      "date": "2021-12-15",
+      "time": "6 p.m. – 8 p.m.",
+      "description": "Join us for our FPRA Lake Holiday Social!",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-holiday-social-tickets-216342986697"
+    },
+    {
+      "title": "FPRA Lake: Get the Media's Attention and Keep It",
+      "date": "2021-11-17",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Emmy-award winning producer and author Paula Rizzo will present the guide to  being more productive and getting the media's attention.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-get-the-medias-attention-and-keep-it-tickets-198686004187"
+    },
+    {
+      "title": "Energy Reboot for Peak Performance",
+      "date": "2021-10-20",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "You've got so much to juggle. And, this past year has been particularly demanding and draining. How would you like to have more energy?",
+      "registerUrl": "https://www.eventbrite.com/e/energy-reboot-for-peak-performance-tickets-178974757317"
+    },
+    {
+      "title": "Why communications pros should pay attention to the i0S 14.5 update.",
+      "date": "2021-09-15",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Apple's new App Tracking Transparency (ATT) is creating a buzz. Find out what the new privacy feature means to iOS users and communicators.",
+      "registerUrl": "https://www.eventbrite.com/e/why-communications-pros-should-pay-attention-to-the-i0s-145-update-tickets-167674189013"
+    },
+    {
+      "title": "'Be Great in a Crisis' with international media trainer Warren Weeks",
+      "date": "2021-08-18",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Unanswered bad news – whether true or false – can have a devastating. Learn how to be great in a crisis.",
+      "registerUrl": "https://www.eventbrite.com/e/be-great-in-a-crisis-with-international-media-trainer-warren-weeks-tickets-166942458387"
+    },
+    {
+      "title": "FPRA Lake presents 'GMA Social Q&A' with Anthony Morrison",
+      "date": "2021-06-16",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "Anthony Morrison, offers a highly interactive chat about about the behind the scenes social media operations of GMA.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-presents-gma-social-qa-with-anthony-morrison-tickets-154479206465"
+    },
+    {
+      "title": "FPRA Lake: \"How to Promote Diversity and Inclusion with the AAPI community\"",
+      "date": "2021-04-20",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "FPRA Lake County Chapter welcomes Valerie Boey, veteran award-winning reporter and  and President of Florida's AAJA Chapter.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-how-to-promote-diversity-and-inclusion-with-the-aapi-community-tickets-149209789497"
+    },
+    {
+      "title": "How to Drive Engagement with Instagram featuring Maureen Kenyon",
+      "date": "2021-03-17",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "The Florida Public Relations Association (FPRA) Lake County Chapter welcomes Maureen Kenyon.",
+      "registerUrl": "https://www.eventbrite.com/e/how-to-drive-engagement-with-instagram-featuring-maureen-kenyon-tickets-143399183819"
+    },
+    {
+      "title": "FPRA Lake presents ‘Digging Deeper into Research’ with Jay Wilson, APR, CPR",
+      "date": "2021-02-17",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "The Florida Public Relations Association (FPRA) Lake County Chapter welcomes Jay Wilson, APR, CPRC.",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-presents-digging-deeper-into-research-with-jay-wilson-apr-cpr-tickets-140095939727"
+    },
+    {
+      "title": "How to Host a Virtual News Conference with Scott Westcott",
+      "date": "2020-12-16",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "The tried-and-true press conference as we know has changed due to COVID-19, making way for virtual news conferences.",
+      "registerUrl": "https://www.eventbrite.com/e/how-to-host-a-virtual-news-conference-with-scott-westcott-tickets-130319554295"
+    },
+    {
+      "title": "Social Media Accessibility with Alexa Heinrich",
+      "date": "2020-11-18",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Online",
+      "description": "With one in four adults  having some form of a disability, organizations must be able to  reach a diverse population through social media.",
+      "registerUrl": "https://www.eventbrite.com/e/social-media-accessibility-with-alexa-heinrich-tickets-125238388391"
+    },
+    {
+      "title": "FPRA Lake February Meeting: Are You Telling Your Best Story Online?",
+      "date": "2020-02-19",
+      "time": "11:30 a.m. – 1 p.m.",
+      "location": "City of Tavares Utility Administration Building",
+      "description": "Do you know how online reputation affects the bottom line? How much does it cost to lose  leads because your website is not optimized?",
+      "registerUrl": "https://www.eventbrite.com/e/fpra-lake-february-meeting-are-you-telling-your-best-story-online-tickets-92948987925"
+    }
+  ]
 }
