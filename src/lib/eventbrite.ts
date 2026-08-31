@@ -132,13 +132,17 @@ async function getJson(url: string, token: string): Promise<Response> {
 }
 
 /** Walks Eventbrite's continuation-token pagination, with a hard page cap. */
-async function fetchAllPages(endpoint: string, token: string): Promise<EventbriteEvent[]> {
+async function fetchAllPages(
+  endpoint: string,
+  token: string,
+  useStatusFilter: boolean,
+): Promise<EventbriteEvent[]> {
   const collected: EventbriteEvent[] = [];
   let continuation: string | undefined;
 
   for (let page = 0; page < 20; page += 1) {
     const url = new URL(endpoint);
-    url.searchParams.set('status', STATUSES);
+    if (useStatusFilter) url.searchParams.set('status', STATUSES);
     url.searchParams.set('order_by', 'start_desc');
     url.searchParams.set('expand', 'venue');
     if (continuation) url.searchParams.set('continuation', continuation);
@@ -180,24 +184,52 @@ async function fetchAllPages(endpoint: string, token: string): Promise<Eventbrit
   return collected;
 }
 
-/** Fetches and maps events. Throws on failure — callers handle the fallback. */
+/**
+ * Fetches and maps events.
+ *
+ * A 200 with an empty list is not proof the calendar is empty — the events may
+ * simply live under the other collection, or be excluded by the status filter.
+ * So every combination is probed until one yields events, and what each
+ * attempt returned is logged. Throws only if no attempt reached the API at
+ * all; callers handle the fallback.
+ */
 export async function fetchEvents(token: string): Promise<ChapterEvent[]> {
-  let lastError: unknown;
+  const attempts: string[] = [];
+  const errors: unknown[] = [];
+  let anySucceeded = false;
 
-  for (const endpoint of ENDPOINTS) {
-    try {
-      const raw = await fetchAllPages(endpoint, token);
-      return raw
-        .map(toChapterEvent)
-        .filter((event): event is ChapterEvent => event !== null)
-        .sort((a, b) => b.date.localeCompare(a.date));
-    } catch (error) {
-      const status = (error as { status?: number }).status;
-      // Only a 404 means "wrong collection" — anything else is a real failure.
-      if (status !== 404) throw error;
-      lastError = error;
+  for (const useStatusFilter of [true, false]) {
+    for (const endpoint of ENDPOINTS) {
+      const collection = endpoint.includes('/organizers/') ? 'organizers' : 'organizations';
+      const label = `${collection}${useStatusFilter ? '' : ' (no status filter)'}`;
+
+      try {
+        const raw = await fetchAllPages(endpoint, token, useStatusFilter);
+        anySucceeded = true;
+
+        const mapped = raw
+          .map(toChapterEvent)
+          .filter((event): event is ChapterEvent => event !== null);
+
+        attempts.push(`${label}: ${raw.length} returned, ${mapped.length} usable`);
+
+        if (mapped.length > 0) {
+          console.info(`[events] source: ${label} endpoint.`);
+          return mapped.sort((a, b) => b.date.localeCompare(a.date));
+        }
+      } catch (error) {
+        attempts.push(`${label}: ${(error as Error).message}`);
+        errors.push(error);
+      }
     }
   }
 
-  throw lastError ?? new Error('No Eventbrite endpoint matched the organizer ID');
+  if (!anySucceeded) {
+    throw errors[0] ?? new Error('No Eventbrite endpoint could be reached');
+  }
+
+  // Reached the API but found nothing anywhere — report every probe so the
+  // cause (wrong ID, drafts only, genuinely empty calendar) is visible.
+  console.warn(`[events] no events found. Probes: ${attempts.join(' | ')}`);
+  return [];
 }
