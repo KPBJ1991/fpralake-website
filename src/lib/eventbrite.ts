@@ -231,5 +231,42 @@ export async function fetchEvents(token: string): Promise<ChapterEvent[]> {
   // Reached the API but found nothing anywhere — report every probe so the
   // cause (wrong ID, drafts only, genuinely empty calendar) is visible.
   console.warn(`[events] no events found. Probes: ${attempts.join(' | ')}`);
+  await reportAccessibleOrganizations(token);
   return [];
+}
+
+/**
+ * Diagnostic only, run when no events were found.
+ *
+ * Eventbrite events are owned by an *organization*; an organizer is a profile
+ * label attached to them. A valid organizer ID with zero events usually means
+ * the events sit under an organization whose ID we were never given. This
+ * lists the organizations the token can actually see, so the right ID can be
+ * read straight out of the build log.
+ *
+ * Logs organization ids and names only — never the token. Never throws.
+ */
+async function reportAccessibleOrganizations(token: string): Promise<void> {
+  try {
+    const response = await getJson(`${API_BASE}/users/me/organizations/`, token);
+    if (!response.ok) {
+      console.warn(`[events] could not list organizations: ${response.status}`);
+      return;
+    }
+    const body = (await response.json()) as {
+      organizations?: Array<{ id?: string; name?: string }>;
+    };
+    const orgs = body.organizations ?? [];
+    if (orgs.length === 0) {
+      console.warn('[events] this token can see no organizations.');
+      return;
+    }
+    const listed = orgs.map((o) => `${o.id} (${o.name ?? 'unnamed'})`).join(', ');
+    console.warn(
+      `[events] organizations visible to this token: ${listed}. ` +
+        'If one of these owns the chapter calendar, set it as ORGANIZER_ID in src/lib/eventbrite.ts.',
+    );
+  } catch (error) {
+    console.warn(`[events] organization lookup failed: ${(error as Error).message}`);
+  }
 }
