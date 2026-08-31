@@ -34,18 +34,25 @@ export type EventCache = {
   events: ChapterEvent[];
 };
 
-const ORGANIZER_ID = '31488027001';
+/**
+ * The chapter's Eventbrite ORGANIZATION id — the entity that owns the events.
+ *
+ * Not to be confused with organizer id 31488027001, which the original brief
+ * specified: that profile exists and is readable, but owns no events.
+ * Discovered via /v3/users/me/organizations/, which reported exactly one
+ * organization: 406186576245 (FPRA Lake).
+ */
+const ORGANIZATION_ID = '406186576245';
 const API_BASE = 'https://www.eventbriteapi.com/v3';
 
 /**
- * Eventbrite exposes organizer-owned events under two different collections
- * depending on how the account is structured, and an unauthenticated probe
- * returns 401 for both — so the resource cannot be identified ahead of time.
- * Try the organizer collection first, then the organization one on a 404.
+ * Both collections are still probed. The organization endpoint is the one
+ * expected to answer; keeping the organizer path costs a single 404 and keeps
+ * the fetch working if the account is ever restructured.
  */
 const ENDPOINTS = [
-  `${API_BASE}/organizers/${ORGANIZER_ID}/events/`,
-  `${API_BASE}/organizations/${ORGANIZER_ID}/events/`,
+  `${API_BASE}/organizations/${ORGANIZATION_ID}/events/`,
+  `${API_BASE}/organizers/${ORGANIZATION_ID}/events/`,
 ];
 
 /** Statuses worth showing. Drafts and cancellations are excluded. */
@@ -264,7 +271,7 @@ async function reportAccessibleOrganizations(token: string): Promise<void> {
     const listed = orgs.map((o) => `${o.id} (${o.name ?? 'unnamed'})`).join(', ');
     console.warn(
       `[events] organizations visible to this token: ${listed}. ` +
-        'If one of these owns the chapter calendar, set it as ORGANIZER_ID in src/lib/eventbrite.ts.',
+        'If one of these owns the chapter calendar, set it as ORGANIZATION_ID in src/lib/eventbrite.ts.',
     );
   } catch (error) {
     console.warn(`[events] organization lookup failed: ${(error as Error).message}`);
