@@ -1,0 +1,76 @@
+---
+import type { ChapterEvent } from '../data/events';
+
+interface Props {
+  event: ChapterEvent;
+  past?: boolean;
+}
+
+const { event, past = false } = Astro.props;
+
+// Parse as local time — `new Date('2026-09-17')` would be parsed as UTC and can
+// render as the previous day in US time zones.
+const [y, m, d] = event.date.split('-').map(Number);
+const dt = new Date(y, m - 1, d);
+
+const month = dt.toLocaleDateString('en-US', { month: 'short' });
+const day = dt.toLocaleDateString('en-US', { day: 'numeric' });
+const fullDate = dt.toLocaleDateString('en-US', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<article
+  class:list={[
+    'flex gap-5 rounded-brand border p-6 transition-colors sm:gap-6',
+    past ? 'border-rule bg-sky-tint' : 'border-rule bg-white hover:border-sky',
+  ]}
+>
+  <div
+    class:list={[
+      'flex size-16 shrink-0 flex-col items-center justify-center rounded-brand text-center',
+      past ? 'bg-silver-tint text-royal' : 'bg-navy text-white',
+    ]}
+    aria-hidden="true"
+  >
+    <span class="text-[0.62rem] font-bold tracking-[0.12em] uppercase">{month}</span>
+    <span class="text-2xl leading-none font-bold">{day}</span>
+  </div>
+
+  <div class="min-w-0">
+    <div class="flex flex-wrap items-center gap-x-3 gap-y-1">
+      <h3 class:list={['text-xl font-bold', past && 'text-royal']}>{event.title}</h3>
+      {event.kind && (
+        <span
+          class:list={[
+            'rounded-full px-2.5 py-0.5 text-[0.68rem] font-bold tracking-wide uppercase',
+            past ? 'bg-silver-tint text-royal' : 'bg-gold-tint text-navy',
+          ]}
+        >
+          {event.kind}
+        </span>
+      )}
+    </div>
+
+    <p class="mt-2 text-sm font-medium text-royal">
+      <time datetime={event.date}>{fullDate}</time>
+      {event.time && <span> · {event.time}</span>}
+      {event.location && <span> · {event.location}</span>}
+    </p>
+
+    <p class="mt-3 leading-relaxed text-navy">{event.description}</p>
+
+    {!past && (
+      <a
+        href={event.registerUrl ?? '/contact'}
+        class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-navy underline-offset-4 hover:text-royal hover:underline"
+      >
+        {event.registerUrl ? 'Register' : 'Ask about attending'}
+        <span aria-hidden="true">→</span>
+      </a>
+    )}
+  </div>
+</article>

@@ -1,0 +1,80 @@
+---
+import Logo from './Logo.astro';
+import { nav, fpra, site, contact } from '../data/site';
+
+const year = new Date().getFullYear();
+
+const stateLinks = [
+  { label: 'FPRA home', href: fpra.home },
+  { label: 'Join FPRA', href: fpra.joinUs },
+  { label: 'Membership types', href: fpra.membershipTypes },
+  { label: 'Professional development', href: fpra.professionalDevelopment },
+  { label: 'Golden Image Awards', href: fpra.recognition },
+];
+---
+
+<footer class="mt-24 bg-navy text-silver">
+  <div class="shell grid gap-12 py-16 md:grid-cols-2 lg:grid-cols-4">
+    <div class="lg:col-span-2">
+      <Logo variant="white" class="h-16 w-auto" />
+      <p class="accent mt-4 text-lg text-gold">{site.tagline}</p>
+      <p class="mt-5 max-w-sm text-sm leading-relaxed text-silver">
+        {site.description}
+      </p>
+      <a
+        href={fpra.joinUs}
+        target="_blank"
+        rel="noopener"
+        class="mt-6 inline-block rounded-brand bg-gold px-5 py-3 text-sm font-bold text-navy transition-colors hover:bg-gold-light"
+      >
+        Join or renew
+      </a>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-bold tracking-[0.18em] text-white uppercase">Chapter</h2>
+      <ul class="mt-5 space-y-3 text-sm">
+        {nav.map((item) => (
+          <li>
+            <a href={item.href} class="text-silver underline-offset-4 hover:text-white hover:underline">
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <div>
+      <h2 class="text-xs font-bold tracking-[0.18em] text-white uppercase">
+        State association
+      </h2>
+      <ul class="mt-5 space-y-3 text-sm">
+        {stateLinks.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              target="_blank"
+              rel="noopener"
+              class="text-silver underline-offset-4 hover:text-white hover:underline"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+
+  <div class="border-t border-royal">
+    <div class="shell flex flex-col gap-3 py-6 text-xs text-silver sm:flex-row sm:items-center sm:justify-between">
+      <p>© {year} {site.name}. All rights reserved.</p>
+      <p>
+        {contact.email && (
+          <a href={`mailto:${contact.email}`} class="underline-offset-4 hover:text-white hover:underline">
+            {contact.email}
+          </a>
+        )}
+      </p>
+    </div>
+  </div>
+</footer>

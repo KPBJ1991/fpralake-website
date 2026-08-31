@@ -1,0 +1,33 @@
+---
+/**
+ * The official FPRA Lake County Chapter lockup.
+ *
+ * Source artwork: src/assets/brand/ (LakeChapter.ai / lakechapter-white.svg).
+ * The navy variant is the same artwork with the white fills set to FPRA Navy
+ * — the guide sanctions navy, black, and white logos and forbids any other
+ * color. No geometry, proportion, or type is altered.
+ *
+ *   "The FPRA Navy Blue logo should be used for all digital and print
+ *    materials... In instances where it is not possible to use the FPRA Navy
+ *    Blue logo, black or white logos may be used."
+ */
+import navyLogo from '../assets/brand/lakechapter-navy.svg';
+import whiteLogo from '../assets/brand/lakechapter-white.svg';
+
+interface Props {
+  /** 'navy' for light backgrounds, 'white' for navy backgrounds. */
+  variant?: 'navy' | 'white';
+  class?: string;
+}
+
+const { variant = 'navy', class: className = '' } = Astro.props;
+const logo = variant === 'white' ? whiteLogo : navyLogo;
+---
+
+<img
+  src={logo.src}
+  width={logo.width}
+  height={logo.height}
+  alt="Florida Public Relations Association — Lake County Chapter"
+  class={className}
+/>

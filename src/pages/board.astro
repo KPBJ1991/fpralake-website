@@ -1,0 +1,59 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import BoardCard from '../components/BoardCard.astro';
+import { board } from '../data/board';
+import { contact } from '../data/site';
+---
+
+<BaseLayout
+  title="Board of Directors"
+  description="The volunteer officers and directors who lead the FPRA Lake County Chapter."
+>
+  <PageHeader
+    eyebrow="Leadership"
+    title="Board of Directors"
+    lead="The chapter is led by a volunteer board elected by the membership. Board service is open to any member in good standing."
+  />
+
+  <section class="shell py-20 sm:py-24">
+    <SectionHeading
+      eyebrow="Chapter leadership"
+      title="Your board"
+      lead="Board members serve as volunteers alongside their day jobs. Any of them is a good first point of contact if you are new to the chapter."
+    />
+    <div class="mt-12 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+      {board.map((member) => <BoardCard member={member} />)}
+    </div>
+  </section>
+
+  <section class="shell py-20 sm:py-24">
+    <div class="rounded-brand border border-rule bg-white p-10 sm:p-12">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl font-bold tracking-tight">Interested in serving?</h2>
+        <p class="mt-5 text-lg leading-relaxed text-royal">
+          Committees are always looking for members, and committee work is how
+          most board members start. Tell us which portfolio interests you and
+          we will connect you with the right person.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a
+            href="/contact"
+            class="rounded-brand bg-navy px-6 py-3.5 font-bold text-white transition-colors hover:bg-royal"
+          >
+            Contact the chapter
+          </a>
+          {contact.email && (
+            <a
+              href={`mailto:${contact.email}?subject=Chapter%20volunteer%20interest`}
+              class="rounded-brand border border-rule px-6 py-3.5 font-bold text-navy transition-colors hover:bg-sky-tint"
+            >
+              Email us
+            </a>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

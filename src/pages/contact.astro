@@ -1,0 +1,198 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { contact, fpra, site, stateOffice } from '../data/site';
+
+const reasons = [
+  {
+    title: 'Attending a meeting',
+    body: 'Guests are welcome. Let us know which program you would like to visit.',
+  },
+  {
+    title: 'Joining or renewing',
+    body: 'We can help you pick the right membership category before you apply.',
+  },
+  {
+    title: 'Speaking or sponsoring',
+    body: 'We book programs ahead. Send a topic or a sponsorship question any time.',
+  },
+  {
+    title: 'Press and media',
+    body: 'For comment on the chapter or on FPRA programming in Lake County.',
+  },
+];
+
+const inputClass =
+  'w-full rounded-brand border border-rule bg-white px-4 py-3 text-navy placeholder:text-royal focus:border-royal focus:outline-none';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Get in touch with the FPRA Lake County Chapter about meetings, membership, speaking, or sponsorship."
+>
+  <PageHeader
+    eyebrow="Contact"
+    title="Get in touch"
+    lead="Questions about a program, membership, or working with the chapter? A board member will get back to you."
+  />
+
+  <section class="shell py-20 sm:py-24">
+    <div class="grid gap-14 lg:grid-cols-5">
+      <!-- Contact details -->
+      <div class="lg:col-span-2">
+        <SectionHeading eyebrow="Reach us" title="Chapter contacts" />
+
+        <dl class="mt-8 space-y-6">
+          {contact.email && (
+            <div>
+              <dt class="text-xs font-bold tracking-[0.14em] text-royal uppercase">Email</dt>
+              <dd class="mt-2">
+                <a
+                  href={`mailto:${contact.email}`}
+                  class="text-lg font-bold text-navy underline underline-offset-4 hover:text-royal"
+                >
+                  {contact.email}
+                </a>
+              </dd>
+            </div>
+          )}
+
+          {contact.phone && (
+            <div>
+              <dt class="text-xs font-bold tracking-[0.14em] text-royal uppercase">Phone</dt>
+              <dd class="mt-2 text-lg text-navy">{contact.phone}</dd>
+            </div>
+          )}
+
+          {contact.mailingAddress && (
+            <div>
+              <dt class="text-xs font-bold tracking-[0.14em] text-royal uppercase">Mail</dt>
+              <dd class="mt-2 text-navy">{contact.mailingAddress}</dd>
+            </div>
+          )}
+
+          <div>
+            <dt class="text-xs font-bold tracking-[0.14em] text-royal uppercase">Meetings</dt>
+            <dd class="mt-2 leading-relaxed text-navy">
+              {contact.meetingNote}
+              <a href="/events" class="ml-1 font-semibold text-navy underline underline-offset-4 hover:text-royal">
+                See the calendar
+              </a>
+            </dd>
+          </div>
+
+          <div>
+            <dt class="text-xs font-bold tracking-[0.14em] text-royal uppercase">
+              FPRA State Office
+            </dt>
+            <dd class="mt-2 leading-relaxed text-navy">
+              For membership records, dues, and statewide programs, contact the
+              State Office directly.
+              <span class="mt-3 block">
+                <a
+                  href={`tel:${stateOffice.phone.replace(/-/g, '')}`}
+                  class="font-semibold text-navy underline underline-offset-4 hover:text-royal"
+                >
+                  {stateOffice.phone}
+                </a>
+              </span>
+              <span class="block">
+                <a
+                  href={`mailto:${stateOffice.email}`}
+                  class="font-semibold text-navy underline underline-offset-4 hover:text-royal"
+                >
+                  {stateOffice.email}
+                </a>
+              </span>
+              <span class="mt-2 block text-sm text-royal">{stateOffice.address}</span>
+              <span class="mt-2 block">
+                <a
+                  href={fpra.home}
+                  target="_blank"
+                  rel="noopener"
+                  class="font-semibold text-navy underline underline-offset-4 hover:text-royal"
+                >
+                  fpra.org
+                </a>
+              </span>
+            </dd>
+          </div>
+        </dl>
+      </div>
+
+      <!-- Form (or email fallback while no endpoint is configured) -->
+      <div class="lg:col-span-3">
+        <div class="rounded-brand border border-rule bg-sky-tint p-8 sm:p-10">
+          {contact.formEndpoint ? (
+            <>
+              <h2 class="text-2xl font-bold">Send a message</h2>
+              <form action={contact.formEndpoint} method="POST" class="mt-8 grid gap-5">
+                <div class="grid gap-5 sm:grid-cols-2">
+                  <div>
+                    <label for="name" class="block text-sm font-bold text-navy">Name</label>
+                    <input id="name" name="name" type="text" required class={`mt-2 ${inputClass}`} />
+                  </div>
+                  <div>
+                    <label for="email" class="block text-sm font-bold text-navy">Email</label>
+                    <input id="email" name="email" type="email" required class={`mt-2 ${inputClass}`} />
+                  </div>
+                </div>
+                <div>
+                  <label for="organization" class="block text-sm font-bold text-navy">
+                    Organization <span class="font-medium text-royal">(optional)</span>
+                  </label>
+                  <input id="organization" name="organization" type="text" class={`mt-2 ${inputClass}`} />
+                </div>
+                <div>
+                  <label for="subject" class="block text-sm font-bold text-navy">Subject</label>
+                  <select id="subject" name="subject" class={`mt-2 ${inputClass}`}>
+                    <option>Attending a meeting</option>
+                    <option>Membership</option>
+                    <option>Speaking or sponsorship</option>
+                    <option>Press and media</option>
+                    <option>Something else</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="message" class="block text-sm font-bold text-navy">Message</label>
+                  <textarea id="message" name="message" rows="5" required class={`mt-2 ${inputClass}`}></textarea>
+                </div>
+                <button
+                  type="submit"
+                  class="justify-self-start rounded-brand bg-navy px-6 py-3.5 font-bold text-white transition-colors hover:bg-royal"
+                >
+                  Send message
+                </button>
+              </form>
+            </>
+          ) : (
+            <>
+              <h2 class="text-2xl font-bold">Email the chapter</h2>
+              <p class="mt-4 text-lg leading-relaxed text-royal">
+                Send us a note and tell us a little about your role and what
+                you are looking for. A board member will follow up.
+              </p>
+              <div class="mt-8 grid gap-3 sm:grid-cols-2">
+                {reasons.map((reason) => (
+                  <div class="rounded-brand border border-rule bg-white p-5">
+                    <h3 class="font-bold">{reason.title}</h3>
+                    <p class="mt-1.5 text-sm leading-relaxed text-royal">{reason.body}</p>
+                  </div>
+                ))}
+              </div>
+              {contact.email && (
+                <a
+                  href={`mailto:${contact.email}?subject=${encodeURIComponent(`Inquiry via ${site.domain}`)}`}
+                  class="mt-8 inline-block rounded-brand bg-navy px-6 py-3.5 font-bold text-white transition-colors hover:bg-royal"
+                >
+                  Email {contact.email}
+                </a>
+              )}
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

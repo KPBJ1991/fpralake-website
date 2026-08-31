@@ -1,0 +1,88 @@
+@import "tailwindcss";
+/* Montserrat — the guide's required typeface for HTML and electronic copy.
+   Self-hosted via @fontsource so the site makes no third-party font request. */
+@import "@fontsource-variable/montserrat";
+
+/* ============================================================================
+   FPRA BRAND TOKENS
+   Source: 1367_FPRA_Branding_Style_Guide_2025.pdf (Color Palette, p.8;
+   Typefaces, p.9) — a copy lives in src/assets/brand/.
+
+   ── HARD RULE FROM THE GUIDE ──────────────────────────────────────────────
+   "FPRA Navy Blue may only be used at 100% opacity. Tints are NOT acceptable
+   in ANY circumstance."
+
+   So --color-navy is never given a numeric scale, never used with an opacity
+   modifier (no `bg-navy/50`), and never lightened. Where a lighter surface or
+   a hover state is needed, use the PALETTE colors below — the guide expressly
+   permits tinting those: "tints may be used to suit individual designs...
+   Use a light tint of soft yellow or sky blue to create a background for a
+   sidebar or to break up large areas of text."
+
+   "These are the only colors that may be used in creating the visual identity
+   for FPRA."
+   ========================================================================= */
+@theme {
+  /* --- Corporate colors — 100% opacity only, never tinted ---------------- */
+  --color-navy: #1d1e4d; /* FPRA Navy Blue · PMS 2768C */
+
+  /* --- Palette colors — tints permitted ---------------------------------- */
+  --color-gold: #ddb65b; /* Soft Yellow · PMS 141C */
+  --color-royal: #003b71; /* Royal Blue  · PMS 541C */
+  --color-sky: #4daacc; /* Sky Blue    · PMS 3105C */
+  --color-silver: #a7a9b4; /* Silver      · PMS Cool Gray 6 */
+
+  /* Tints of the above, used for surfaces, rules, and hover states. */
+  --color-gold-light: #e7c87f; /* Soft Yellow tint — button hover */
+  --color-gold-tint: #f8f0de; /* Soft Yellow tint — badges */
+  --color-sky-tint: #eef7fa; /* Sky Blue tint — section backgrounds */
+  --color-sky-soft: #dcedf4; /* Sky Blue tint — stronger surface */
+  --color-silver-tint: #ececee; /* Silver tint — muted surface */
+  --color-rule: #cdced4; /* Silver tint — borders and dividers */
+
+  /* --- Typefaces (guide p.9) --------------------------------------------- */
+  /* "Montserrat typeface is the preferred font for all printed materials as
+     well as HTML, e-mail and other electronic copy." */
+  --font-sans: "Montserrat Variable", Montserrat, ui-sans-serif, system-ui,
+    -apple-system, "Segoe UI", Roboto, sans-serif;
+  /* "Times New Roman may be used as an accent." Matches the chapter logo's
+     italic wordmark. */
+  --font-accent: "Times New Roman", Times, serif;
+
+  --radius-brand: 0.5rem;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    @apply bg-white font-sans text-navy antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply text-navy;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  :focus-visible {
+    @apply outline-2 outline-offset-2 outline-royal;
+  }
+}
+
+@layer components {
+  .shell {
+    @apply mx-auto w-full max-w-6xl px-5 sm:px-8;
+  }
+
+  /* Times New Roman italic accent, echoing the chapter logo's wordmark. */
+  .accent {
+    @apply font-accent italic;
+  }
+}

@@ -1,0 +1,80 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import EventCard from '../components/EventCard.astro';
+import { splitEvents } from '../data/events';
+import { fpra } from '../data/site';
+
+const { upcoming, past } = splitEvents();
+---
+
+<BaseLayout
+  title="Events"
+  description="Upcoming and past programs of the FPRA Lake County Chapter, including monthly luncheons, workshops, and professional development sessions."
+>
+  <PageHeader
+    eyebrow="Calendar"
+    title="Chapter events"
+    lead="Monthly programs, workshops, and socials. Members and guests are both welcome — you do not have to join before you visit."
+  />
+
+  <section class="shell py-20 sm:py-24">
+    <SectionHeading
+      eyebrow={`${upcoming.length} scheduled`}
+      title="Upcoming events"
+    />
+
+    {upcoming.length > 0 ? (
+      <div class="mt-12 grid gap-5">
+        {upcoming.map((event) => <EventCard event={event} />)}
+      </div>
+    ) : (
+      <p class="mt-12 rounded-brand border border-rule bg-sky-tint p-8 leading-relaxed text-royal">
+        Nothing is on the chapter calendar at the moment. New programs are
+        announced by email —
+        <a href="/contact" class="font-semibold text-navy underline underline-offset-4">
+          get in touch
+        </a>
+        to be added to the list.
+      </p>
+    )}
+  </section>
+
+  {past.length > 0 && (
+    <section class="border-y border-rule bg-sky-tint py-20 sm:py-24">
+      <div class="shell">
+        <SectionHeading
+          eyebrow="Archive"
+          title="Past events"
+          lead="A look at recent chapter programming."
+        />
+        <div class="mt-12 grid gap-5">
+          {past.map((event) => <EventCard event={event} past />)}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="shell py-20 sm:py-24">
+    <div class="rounded-brand bg-navy px-8 py-14 sm:px-14">
+      <div class="max-w-2xl">
+        <h2 class="text-3xl font-bold tracking-tight text-white">
+          Looking for statewide events?
+        </h2>
+        <p class="mt-5 text-lg leading-relaxed text-silver">
+          The state association runs webinars, workshops, and the annual PR &amp;
+          Comms Summit throughout the year, all open to chapter members.
+        </p>
+        <a
+          href={fpra.events}
+          target="_blank"
+          rel="noopener"
+          class="mt-8 inline-block rounded-brand bg-gold px-6 py-3.5 font-bold text-navy transition-colors hover:bg-gold-light"
+        >
+          FPRA statewide calendar
+        </a>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

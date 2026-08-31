@@ -1,0 +1,57 @@
+---
+import type { BoardMember } from '../data/board';
+
+interface Props {
+  member: BoardMember;
+}
+
+const { member } = Astro.props;
+const unfilled = !member.name || member.name === 'TBA';
+
+// Initials drive the avatar placeholder; unfilled seats show a neutral glyph.
+const initials = unfilled
+  ? '—'
+  : member.name
+      .split(' ')
+      .filter(Boolean)
+      .slice(0, 2)
+      .map((part) => part[0]?.toUpperCase())
+      .join('');
+---
+
+<article class="flex flex-col rounded-brand border border-rule bg-white p-6">
+  <div
+    class:list={[
+      'flex size-14 items-center justify-center rounded-full text-lg font-bold',
+      unfilled ? 'bg-silver-tint text-silver' : 'bg-navy text-white',
+    ]}
+    aria-hidden="true"
+  >
+    {initials}
+  </div>
+
+  <p class="mt-5 text-xs font-bold tracking-[0.14em] text-royal uppercase">
+    {member.role}
+  </p>
+
+  <h3 class:list={['mt-2 text-lg font-bold', unfilled && 'text-royal italic']}>
+    {unfilled ? 'To be announced' : member.name}
+  </h3>
+
+  {!unfilled && (member.title || member.org) && (
+    <p class="mt-1 text-sm leading-relaxed text-royal">
+      {member.title}
+      {member.title && member.org && <span>, </span>}
+      {member.org}
+    </p>
+  )}
+
+  {!unfilled && member.email && (
+    <a
+      href={`mailto:${member.email}`}
+      class="mt-3 text-sm font-semibold text-navy underline-offset-4 hover:text-royal hover:underline"
+    >
+      {member.email}
+    </a>
+  )}
+</article>

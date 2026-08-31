@@ -1,0 +1,83 @@
+# Builds the site and deploys it to GitHub Pages.
+#
+# NOTE: this workflow was created, not modified — the repository had no
+# .github/ directory. If the chapter deploys somewhere else (Netlify, Vercel,
+# cPanel), keep the `schedule` trigger and the build step and swap out the two
+# Pages-specific steps.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  # Daily rebuild so newly published Eventbrite events appear without a push.
+  # 09:00 UTC ~ 5 a.m. Eastern. GitHub may delay scheduled runs under load.
+  schedule:
+    - cron: '0 9 * * *'
+  # Lets a board member trigger a rebuild by hand from the Actions tab.
+  workflow_dispatch:
+
+# Deploys replace each other; never run two at once. Scheduled runs are not
+# cancelled mid-flight, so a rebuild always finishes.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      # Needed only to commit the refreshed event cache back to the branch.
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - name: Build
+        env:
+          # Repository secret. Never echoed, never written to a file — see the
+          # secret-handling note in src/lib/eventbrite.ts. A missing or invalid
+          # token makes the build fall back to the committed event cache and
+          # log a warning; it does not fail the build.
+          EVENTBRITE_TOKEN: ${{ secrets.EVENTBRITE_TOKEN }}
+        run: npm run build
+
+      # A successful fetch rewrites src/data/events-cache.json. Committing it
+      # back is what makes "last-known good" survive to the next run. Skipped
+      # when the fetch failed, because the file is then unchanged.
+      - name: Commit refreshed event cache
+        if: github.event_name != 'pull_request'
+        run: |
+          if [[ -n "$(git status --porcelain src/data/events-cache.json)" ]]; then
+            git config user.name  'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add src/data/events-cache.json
+            # [skip ci] stops this commit from triggering another build.
+            git commit -m 'chore: refresh Eventbrite event cache [skip ci]'
+            git push
+          else
+            echo 'Event cache unchanged; nothing to commit.'
+          fi
+
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

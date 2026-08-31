@@ -1,0 +1,107 @@
+---
+import Logo from './Logo.astro';
+import { nav, fpra, site } from '../data/site';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) =>
+  href === '/' ? path === '/' : path.startsWith(href);
+---
+
+<header class="sticky top-0 z-50 border-b border-rule bg-white/95 backdrop-blur">
+  <!-- Utility bar: the chapter's tie back to the state association -->
+  <div class="hidden bg-navy text-silver md:block">
+    <div class="shell flex h-9 items-center justify-end gap-6 text-xs">
+      <span class="text-silver">A chapter of the Florida Public Relations Association</span>
+      <a
+        href={fpra.home}
+        class="font-semibold text-white underline-offset-4 hover:text-gold hover:underline"
+        target="_blank"
+        rel="noopener"
+      >
+        fpra.org
+      </a>
+    </div>
+  </div>
+
+  <nav class="shell flex h-20 items-center justify-between gap-6" aria-label="Main">
+    <a href="/" class="rounded-brand" aria-label={`${site.name} — home`}>
+      <Logo class="h-12 w-auto sm:h-14" />
+    </a>
+
+    <div class="hidden items-center gap-1 lg:flex">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          aria-current={isActive(item.href) ? 'page' : undefined}
+          class:list={[
+            'rounded-brand px-3 py-2 text-sm font-semibold transition-colors',
+            isActive(item.href)
+              ? 'text-navy bg-sky-tint'
+              : 'text-royal hover:text-navy hover:bg-sky-tint',
+          ]}
+        >
+          {item.label}
+        </a>
+      ))}
+      <a
+        href={fpra.joinUs}
+        target="_blank"
+        rel="noopener"
+        class="ml-3 rounded-brand bg-gold px-4 py-2.5 text-sm font-bold text-navy transition-colors hover:bg-gold-light"
+      >
+        Join FPRA
+      </a>
+    </div>
+
+    <button
+      type="button"
+      id="nav-toggle"
+      class="rounded-brand p-2 text-navy hover:bg-sky-tint lg:hidden"
+      aria-expanded="false"
+      aria-controls="mobile-nav"
+    >
+      <span class="sr-only">Toggle navigation</span>
+      <svg class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+        <path d="M4 7h16M4 12h16M4 17h16" />
+      </svg>
+    </button>
+  </nav>
+
+  <div id="mobile-nav" class="hidden border-t border-rule bg-white lg:hidden">
+    <div class="shell flex flex-col gap-1 py-4">
+      {nav.map((item) => (
+        <a
+          href={item.href}
+          aria-current={isActive(item.href) ? 'page' : undefined}
+          class:list={[
+            'rounded-brand px-3 py-3 text-base font-semibold',
+            isActive(item.href) ? 'bg-sky-tint text-navy' : 'text-royal',
+          ]}
+        >
+          {item.label}
+        </a>
+      ))}
+      <a
+        href={fpra.joinUs}
+        target="_blank"
+        rel="noopener"
+        class="mt-2 rounded-brand bg-gold px-4 py-3 text-center text-base font-bold text-navy"
+      >
+        Join FPRA
+      </a>
+      <a href={fpra.home} target="_blank" rel="noopener" class="px-3 py-3 text-sm text-royal">
+        Visit fpra.org →
+      </a>
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle');
+  const menu = document.getElementById('mobile-nav');
+
+  toggle?.addEventListener('click', () => {
+    const open = menu?.classList.toggle('hidden') === false;
+    toggle.setAttribute('aria-expanded', String(open));
+  });
+</script>

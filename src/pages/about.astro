@@ -1,0 +1,197 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import { site, fpra, contact } from '../data/site';
+
+const whatWeDo = [
+  {
+    title: 'Monthly programs',
+    body:
+      'Speakers and working sessions on the craft — media relations, crisis ' +
+      'communications, measurement, writing, and the tools changing all of them.',
+  },
+  {
+    title: 'Professional development',
+    body:
+      'Support for members pursuing Accreditation in Public Relations (APR) ' +
+      'and access to the full statewide slate of workshops and webinars.',
+  },
+  {
+    title: 'Recognition',
+    body:
+      'Encouragement and coaching for members entering the Golden Image ' +
+      'Awards, FPRA’s statewide competition for outstanding PR work.',
+  },
+  {
+    title: 'Community service',
+    body:
+      'Volunteer communications support for local nonprofits and civic ' +
+      'organizations that need professional counsel they could not otherwise buy.',
+  },
+];
+
+const audience = [
+  'Agency and independent practitioners',
+  'Government and public information officers',
+  'Nonprofit communicators and development staff',
+  'In-house marketing and corporate communications teams',
+  'Educators and communications students',
+  'Journalists moving into public relations',
+];
+---
+
+<BaseLayout
+  title="About the Chapter"
+  description="The Lake County Chapter of the Florida Public Relations Association serves communications professionals across Lake County with monthly programs, professional development, and statewide recognition."
+>
+  <PageHeader
+    eyebrow="About"
+    title="About the Lake County Chapter"
+    lead="A local home for the communications professionals of Lake County, and part of one of the oldest public relations associations in the country."
+  />
+
+  <section class="shell py-20 sm:py-24">
+    <div class="grid gap-14 lg:grid-cols-3">
+      <div class="lg:col-span-2">
+        <SectionHeading eyebrow="Our purpose" title="What the chapter is for" />
+
+        <!-- The Association's official mission statement, quoted verbatim
+             from the FPRA Brand Standards and Style Guide (p.3). -->
+        <blockquote class="mt-8 border-l-4 border-gold bg-sky-tint p-7">
+          <p class="accent text-xl leading-relaxed text-navy">
+            &ldquo;{site.mission}&rdquo;
+          </p>
+          <cite class="mt-4 block text-sm font-bold text-royal not-italic">
+            &mdash; Mission of the {site.parentOrg}
+          </cite>
+        </blockquote>
+        <div class="mt-8 space-y-6 text-lg leading-relaxed text-navy">
+          <p>
+            The Lake County Chapter exists to make professional growth practical for
+            communicators who work in and around Lake County. Statewide
+            conferences matter, but so does a room of people who understand your
+            market, your reporters, and your commission meetings.
+          </p>
+          <p>
+            We bring members together on a regular schedule for programming that
+            is useful the next morning: sessions on the craft, candid
+            conversation about what is working, and the kind of relationships
+            that turn into referrals, advice, and hires.
+          </p>
+          <p>
+            As an FPRA chapter, we hold our members to the association's
+            professional standards and connect them to the credentialing,
+            recognition, and resources of the statewide organization.
+          </p>
+        </div>
+      </div>
+
+      <aside class="rounded-brand border border-rule bg-sky-tint p-7">
+        <h2 class="text-lg font-bold">Chapter at a glance</h2>
+        <dl class="mt-6 space-y-5 text-sm">
+          <div>
+            <dt class="font-bold text-royal uppercase tracking-wide text-xs">Serves</dt>
+            <dd class="mt-1.5 text-navy">Lake County and surrounding communities</dd>
+          </div>
+          <div>
+            <dt class="font-bold text-royal uppercase tracking-wide text-xs">Affiliation</dt>
+            <dd class="mt-1.5 text-navy">
+              A chapter of the {site.parentOrg} —
+              <a
+                href={fpra.home}
+                target="_blank"
+                rel="noopener"
+                class="font-semibold text-navy underline underline-offset-4 hover:text-royal"
+              >
+                fpra.org
+              </a>
+            </dd>
+          </div>
+          <div>
+            <dt class="font-bold text-royal uppercase tracking-wide text-xs">Meetings</dt>
+            <dd class="mt-1.5 text-navy">{contact.meetingNote}</dd>
+          </div>
+          <div>
+            <dt class="font-bold text-royal uppercase tracking-wide text-xs">Leadership</dt>
+            <dd class="mt-1.5 text-navy">
+              An elected volunteer board —
+              <a href="/board" class="font-semibold text-navy underline underline-offset-4 hover:text-royal">
+                meet the board
+              </a>
+            </dd>
+          </div>
+        </dl>
+      </aside>
+    </div>
+  </section>
+
+  <section class="border-y border-rule bg-sky-tint py-20 sm:py-24">
+    <div class="shell">
+      <SectionHeading
+        eyebrow="Programming"
+        title="What we do"
+        lead="Four things the chapter commits to every year."
+      />
+      <div class="mt-12 grid gap-6 sm:grid-cols-2">
+        {whatWeDo.map((item, i) => (
+          <div class="rounded-brand border border-rule bg-white p-7">
+            <span class="text-sm font-bold text-royal">
+              {String(i + 1).padStart(2, '0')}
+            </span>
+            <h3 class="mt-3 text-xl font-bold">{item.title}</h3>
+            <p class="mt-3 leading-relaxed text-royal">{item.body}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="shell py-20 sm:py-24">
+    <div class="grid gap-14 lg:grid-cols-2 lg:items-center">
+      <div>
+        <SectionHeading
+          eyebrow="Membership"
+          title="Who belongs here"
+          lead="If part of your job is explaining an organization to the people it serves, this chapter is for you."
+        />
+        <ul class="mt-8 space-y-3">
+          {audience.map((item) => (
+            <li class="flex gap-3 text-navy">
+              <span class="mt-2 size-1.5 shrink-0 rounded-full bg-gold" aria-hidden="true"></span>
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="rounded-brand bg-navy p-10">
+        <h2 class="text-2xl font-bold text-white">About the state association</h2>
+        <p class="mt-4 leading-relaxed text-silver">
+          The Florida Public Relations Association supports practitioners across
+          the state with professional development, the Golden Image Awards, the
+          annual PR &amp; Comms Summit, accreditation, and a members-only job
+          bank. Chapter members receive all of it.
+        </p>
+        <div class="mt-8 flex flex-wrap gap-4">
+          <a
+            href={fpra.about}
+            target="_blank"
+            rel="noopener"
+            class="rounded-brand border border-silver px-5 py-3 font-bold text-white transition-colors hover:bg-royal"
+          >
+            About FPRA
+          </a>
+          <a
+            href={fpra.joinUs}
+            target="_blank"
+            rel="noopener"
+            class="rounded-brand bg-gold px-5 py-3 font-bold text-navy transition-colors hover:bg-gold-light"
+          >
+            Join Us
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
