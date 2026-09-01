@@ -5,6 +5,7 @@ import EventCard from '../components/EventCard.astro';
 import { site, fpra } from '../data/site';
 import { splitEvents } from '../data/events';
 import { chapterBenefits } from '../data/membership';
+import { withBase } from '../lib/url';
 
 const { upcoming } = splitEvents();
 const nextThree = upcoming.slice(0, 3);
@@ -43,7 +44,7 @@ const nextThree = upcoming.slice(0, 3);
           Join FPRA
         </a>
         <a
-          href="/events"
+          href={withBase("/events")}
           class="rounded-brand border border-silver px-6 py-3.5 font-bold text-white transition-colors hover:bg-royal"
         >
           See upcoming events
@@ -79,7 +80,7 @@ const nextThree = upcoming.slice(0, 3);
       ))}
     </div>
     <a
-      href="/about"
+      href={withBase("/about")}
       class="mt-10 inline-flex items-center gap-1.5 font-bold text-navy underline-offset-4 hover:text-royal hover:underline"
     >
       More about the chapter <span aria-hidden="true">→</span>
@@ -96,7 +97,7 @@ const nextThree = upcoming.slice(0, 3);
           lead="Chapter programs are open to members and guests. Newcomers are welcome at any meeting."
         />
         <a
-          href="/events"
+          href={withBase("/events")}
           class="font-bold text-navy underline-offset-4 hover:text-royal hover:underline"
         >
           All events →
@@ -110,11 +111,11 @@ const nextThree = upcoming.slice(0, 3);
       ) : (
         <p class="mt-12 rounded-brand border border-rule bg-white p-8 text-royal">
           No events are on the calendar right now. Check the
-          <a href="/events" class="font-semibold text-navy underline underline-offset-4">
+          <a href={withBase("/events")} class="font-semibold text-navy underline underline-offset-4">
             events page
           </a>
           for past programs, or
-          <a href="/contact" class="font-semibold text-navy underline underline-offset-4">
+          <a href={withBase("/contact")} class="font-semibold text-navy underline underline-offset-4">
             get in touch
           </a>
           to hear when the next one is announced.
@@ -145,7 +146,7 @@ const nextThree = upcoming.slice(0, 3);
             Join Us at fpra.org
           </a>
           <a
-            href="/membership"
+            href={withBase("/membership")}
             class="rounded-brand border border-silver px-6 py-3.5 font-bold text-white transition-colors hover:bg-royal"
           >
             See member benefits

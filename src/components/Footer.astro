@@ -1,6 +1,7 @@
 ---
 import Logo from './Logo.astro';
 import { nav, fpra, site, contact } from '../data/site';
+import { withBase } from '../lib/url';
 
 const year = new Date().getFullYear();
 
@@ -36,7 +37,7 @@ const stateLinks = [
       <ul class="mt-5 space-y-3 text-sm">
         {nav.map((item) => (
           <li>
-            <a href={item.href} class="text-silver underline-offset-4 hover:text-white hover:underline">
+            <a href={withBase(item.href)} class="text-silver underline-offset-4 hover:text-white hover:underline">
               {item.label}
             </a>
           </li>

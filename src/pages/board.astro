@@ -5,6 +5,7 @@ import SectionHeading from '../components/SectionHeading.astro';
 import BoardCard from '../components/BoardCard.astro';
 import { board } from '../data/board';
 import { contact } from '../data/site';
+import { withBase } from '../lib/url';
 ---
 
 <BaseLayout
@@ -39,7 +40,7 @@ import { contact } from '../data/site';
         </p>
         <div class="mt-8 flex flex-wrap gap-4">
           <a
-            href="/contact"
+            href={withBase("/contact")}
             class="rounded-brand bg-navy px-6 py-3.5 font-bold text-white transition-colors hover:bg-royal"
           >
             Contact the chapter

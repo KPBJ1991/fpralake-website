@@ -1,10 +1,14 @@
 ---
 import Logo from './Logo.astro';
 import { nav, fpra, site } from '../data/site';
+import { withBase } from '../lib/url';
 
 const path = Astro.url.pathname;
-const isActive = (href: string) =>
-  href === '/' ? path === '/' : path.startsWith(href);
+// Astro.url.pathname includes the base, so compare against the prefixed href.
+const isActive = (href: string) => {
+  const full = withBase(href);
+  return href === '/' ? path === full : path.startsWith(full);
+};
 ---
 
 <header class="sticky top-0 z-50 border-b border-rule bg-white/95 backdrop-blur">
@@ -24,14 +28,14 @@ const isActive = (href: string) =>
   </div>
 
   <nav class="shell flex h-20 items-center justify-between gap-6" aria-label="Main">
-    <a href="/" class="rounded-brand" aria-label={`${site.name} — home`}>
+    <a href={withBase("/")} class="rounded-brand" aria-label={`${site.name} — home`}>
       <Logo class="h-12 w-auto sm:h-14" />
     </a>
 
     <div class="hidden items-center gap-1 lg:flex">
       {nav.map((item) => (
         <a
-          href={item.href}
+          href={withBase(item.href)}
           aria-current={isActive(item.href) ? 'page' : undefined}
           class:list={[
             'rounded-brand px-3 py-2 text-sm font-semibold transition-colors',
@@ -71,7 +75,7 @@ const isActive = (href: string) =>
     <div class="shell flex flex-col gap-1 py-4">
       {nav.map((item) => (
         <a
-          href={item.href}
+          href={withBase(item.href)}
           aria-current={isActive(item.href) ? 'page' : undefined}
           class:list={[
             'rounded-brand px-3 py-3 text-base font-semibold',

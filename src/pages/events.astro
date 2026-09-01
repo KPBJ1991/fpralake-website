@@ -5,6 +5,7 @@ import SectionHeading from '../components/SectionHeading.astro';
 import EventCard from '../components/EventCard.astro';
 import { splitEvents, archiveUrl } from '../data/events';
 import { fpra } from '../data/site';
+import { withBase } from '../lib/url';
 
 const { upcoming, past } = splitEvents();
 
@@ -42,7 +43,7 @@ const oldestYear = past.length > 0 ? past[past.length - 1].date.slice(0, 4) : ''
       <p class="mt-12 rounded-brand border border-rule bg-sky-tint p-8 leading-relaxed text-royal">
         Nothing is on the chapter calendar at the moment. New programs are
         announced by email —
-        <a href="/contact" class="font-semibold text-navy underline underline-offset-4">
+        <a href={withBase("/contact")} class="font-semibold text-navy underline underline-offset-4">
           get in touch
         </a>
         to be added to the list.

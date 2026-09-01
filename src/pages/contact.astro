@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import { contact, fpra, site, stateOffice } from '../data/site';
+import { withBase } from '../lib/url';
 
 const reasons = [
   {
@@ -76,7 +77,7 @@ const inputClass =
             <dt class="text-xs font-bold tracking-[0.14em] text-royal uppercase">Meetings</dt>
             <dd class="mt-2 leading-relaxed text-navy">
               {contact.meetingNote}
-              <a href="/events" class="ml-1 font-semibold text-navy underline underline-offset-4 hover:text-royal">
+              <a href={withBase("/events")} class="ml-1 font-semibold text-navy underline underline-offset-4 hover:text-royal">
                 See the calendar
               </a>
             </dd>

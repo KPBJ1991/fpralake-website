@@ -1,5 +1,6 @@
 ---
 import type { ChapterEvent } from '../data/events';
+import { withBase } from '../lib/url';
 
 interface Props {
   event: ChapterEvent;
@@ -65,7 +66,7 @@ const fullDate = dt.toLocaleDateString('en-US', {
 
     {!past && (
       <a
-        href={event.registerUrl ?? '/contact'}
+        href={event.registerUrl ?? withBase('/contact')}
         class="mt-4 inline-flex items-center gap-1.5 text-sm font-bold text-navy underline-offset-4 hover:text-royal hover:underline"
       >
         {event.registerUrl ? 'Register' : 'Ask about attending'}
