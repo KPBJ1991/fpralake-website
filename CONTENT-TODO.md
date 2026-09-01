@@ -1,92 +1,163 @@
-# Content & brand to supply
+# Outstanding items
 
-The site is complete and building. These are the placeholders that need real
-values before launch. Everything below lives in one of five files.
+Last updated 2026-08-31.
 
-## 1. Brand — RESOLVED
+The site is built, deployed, and live at
+**<https://kpbj1991.github.io/fpralake-website/>** — temporarily, while DNS is
+sorted out. All six pages render, the Eventbrite integration is working
+against live data, and the daily rebuild is running.
 
-The real assets were found in `~/Downloads/FPRA/` and are now in
-`src/assets/brand/`. The site uses the official palette, Montserrat, and the
-official chapter lockup. See `src/assets/brand/README.md`.
+What follows is what still needs a human.
 
-Two open items there: the logo's wordmark is **live text rather than outlines**
-(re-export from the `.ai` with type outlined), and the presence of the **®
-symbol** should be confirmed against the official artwork.
+---
 
-## 2. Board roster — DONE
+## Needs action
 
-The current board was supplied on 2026-08-31 and is live in
-`src/data/board.ts` — six members, credentials formatted per the guide. This
-satisfies the Brand Standards (p.25) requirement that board information be
-current and reviewed annually by September 1.
+### 1. DNS — the site is not at fpralake.org yet  ⚠️ blocking launch
 
-Still outstanding for these cards, whenever the chapter has them:
+`fpralake.org` resolves to Cloudflare (`104.21.75.63`, `172.67.215.182`) and
+returns a 404. Nameservers are `coby.ns.cloudflare.com` / `lisa.ns.cloudflare.com`.
+Nothing is currently served there.
 
-- **Headshots.** Cards currently fall back to an initials avatar. Adding photo
-  support is a `photo?: string` field on `BoardMember` plus an `<img>` in
-  `BoardCard.astro`.
-- **Titles, employers, contact addresses.** `title`, `org`, and `email` are
-  optional and omitted; each renders automatically once present.
+In the Cloudflare dashboard, replace the apex A records with GitHub's:
 
-## 3. Events — now fetched from Eventbrite
+    A  @  185.199.108.153
+    A  @  185.199.109.153
+    A  @  185.199.110.153
+    A  @  185.199.111.153
 
-The hand-written sample events are gone. `src/data/events.ts` fetches from the
-Eventbrite organizer (ID `31488027001`) at build time, and the GitHub Actions
-workflow rebuilds daily at 09:00 UTC so new events appear without a push.
+Optionally `CNAME www → kpbj1991.github.io`.
 
-- **Token**: `EVENTBRITE_TOKEN`, read from the environment and sent as a Bearer
-  header only. Not in any committed file.
-- **Fallback**: `src/data/events-cache.json` holds the last successful
-  response. Any failure — missing token, 401, timeout, malformed payload —
-  logs a `[events]` warning and builds from the cache instead of crashing.
-- **The cache is currently empty**, because no fetch has succeeded yet (see the
-  verification note below). Until one does, the Events page shows its
-  empty state.
+**Set the proxy to "DNS only" (grey cloud), not proxied.** Cloudflare's proxy
+intercepts the HTTP validation GitHub uses to issue the TLS certificate, and is
+the usual cause of a Pages custom domain getting stuck without one. The proxy
+can go back on after the certificate issues.
 
-## 4. Contact details — `src/data/site.ts`  ⚠️ same September 1 deadline
+**Then switch the site back off the subpath** — the steps are also commented
+above the `base` line in `astro.config.mjs`:
 
-- `email` — `fpralake@gmail.com`, confirmed by the chapter 2026-08-31.
-- `phone`, `mailingAddress` — blank, so they are hidden. Add to show them.
-- `meetingNote` — confirm the real cadence and venue.
-- `formEndpoint` — blank. The contact page shows an email CTA while it is empty;
-  add a Formspree/Netlify/etc. URL and a full contact form renders instead.
-  (Deliberate: a form posting nowhere is worse than no form.)
+1. `site: 'https://fpralake.org'`
+2. delete the `base` line
+3. `gh api -X PUT repos/KPBJ1991/fpralake-website/pages -f cname=fpralake.org`
+4. once the certificate issues:
+   `gh api -X PUT repos/KPBJ1991/fpralake-website/pages -F https_enforced=true`
 
-## 5. Membership copy — `src/data/membership.ts`
+Internal links go through `withBase()` in `src/lib/url.ts`, so no link edits
+are needed in either direction.
 
-`stateBenefits` is summarized from the live text at <https://www.fpra.org/join-us>
-and should be accurate. `chapterBenefits` describes the Lake Chapter generically
-— worth a read from someone who knows the chapter.
+**Do the DNS records first and the cname last.** Setting the custom domain
+immediately makes GitHub 301 every github.io request to `fpralake.org`, so the
+current shareable link stops working the moment step 3 runs.
 
-**Dues amounts are deliberately not listed anywhere on this site.** They are
-maintained by the state office and the Membership page links out to
-<https://www.fpra.org/join-us/membership-types> instead of duplicating them.
+### 2. No upcoming events are published
 
-## 6. Chapter name — confirm
+The Eventbrite fetch works and returns 45 events — but **all 45 are in the
+past**, ranging 2020-02-19 to 2026-07-29. So `/events` shows its
+"nothing on the calendar" empty state above the archive, and the homepage shows
+the same.
+
+This is not a bug; the page is accurately reporting an empty upcoming calendar.
+Publishing an event on Eventbrite is all that is needed — the daily cron picks
+it up with no code change and no deploy.
+
+### 3. Chapter contact details — `src/data/site.ts`
+
+The Brand Standards (p.25) require chapter contact information to be kept
+current, the same rule that covers the board roster.
+
+- `email` — `fpralake@gmail.com`, confirmed 2026-08-31. ✅
+- `phone`, `mailingAddress` — blank, so they stay hidden. Add to show them.
+- `meetingNote` — still the generic "meets monthly" text. Confirm the real
+  cadence and venue.
+- `formEndpoint` — blank. The contact page shows an email CTA while it is
+  empty; add a Formspree/Netlify/etc. URL and a full contact form renders
+  instead. (Deliberate: a form posting nowhere is worse than no form.)
+
+### 4. Chapter name — confirm
 
 The official logo reads **"Lake County Chapter"**, so the site uses *FPRA Lake
-County Chapter* throughout. The brief called it the "Lake Chapter" and the
-domain is `fpralake.org`. If the shorter form is correct, change `site.name`
-and `site.chapterName` in `src/data/site.ts` — everything else follows.
+County Chapter* throughout. The original brief called it the "Lake Chapter" and
+the domain is `fpralake.org`. If the shorter form is correct, change
+`site.name` and `site.chapterName` in `src/data/site.ts` — everything else
+follows from those two values.
 
-## 7. Eventbrite — needs one live verification
+### 5. Logo artwork — two things to verify
 
-The integration is written and every failure path is tested, but **no
-successful fetch has been made**, because `EVENTBRITE_TOKEN` is not available
-locally. Two things are unverified against real data:
+Both are in `src/assets/brand/README.md`:
 
-1. **Which collection holds the events.** An unauthenticated probe returns 401
-   for both `/v3/organizers/{id}/events/` and `/v3/organizations/{id}/events/`,
-   so the right one could not be determined ahead of time. The code tries
-   organizer first and falls back to organization on a 404.
-2. **The field mapping** — title, start/end, venue, summary — follows the
-   documented response shape but has not been checked against an actual
-   payload.
+- **The wordmark is live text, not outlines.** `lakechapter-*.svg` sets "Lake
+  County Chapter" as an SVG `<text>` element in Times New Roman Italic.
+  Fallbacks are in place, but on a machine without that font the wordmark
+  substitutes and the lockup will not match. Re-exporting from
+  `LakeChapter.ai` with type converted to outlines removes the risk.
+  Recommended before launch.
+- **The ® symbol.** The guide (p.7) lists "missing the ® symbol" as
+  unacceptable logo usage. Confirm the supplied artwork carries it.
 
-To verify, run a build with the token present and read the `[events]` line:
+---
 
-    EVENTBRITE_TOKEN=<token> npm run build
+## Worth doing, not blocking
 
-A line reading `fetched N event(s)` confirms both. A `falling back to cached
-data` warning names the specific failure. The first successful CI run also
-commits the populated cache back to the branch.
+### Board cards — `src/data/board.ts`
+
+The six current members are live and correct. Optional additions, each of which
+renders automatically once present:
+
+- **Headshots.** Cards fall back to an initials avatar. Photo support is a
+  `photo?: string` field on `BoardMember` plus an `<img>` in `BoardCard.astro`.
+- **Titles, employers, contact addresses** — `title`, `org`, `email` are all
+  optional and currently omitted.
+
+### Membership copy — `src/data/membership.ts`
+
+`stateBenefits` is summarised from the live text at <https://www.fpra.org/join-us>
+and should be accurate. `chapterBenefits` describes the chapter generically and
+is worth a read from someone who knows it.
+
+Dues amounts are deliberately absent site-wide: they are maintained by the
+State Office, and the Membership page links to
+<https://www.fpra.org/join-us/membership-types> rather than duplicating figures
+that would go stale.
+
+### GitHub Actions deprecation warnings
+
+`checkout@v4`, `setup-node@v4`, `configure-pages@v5`, and `deploy-pages@v4`
+target Node 20 and are being force-run on Node 24. Harmless today; they will
+break when GitHub removes the shim. Cheap to bump.
+
+---
+
+## Done — for reference
+
+### Brand
+
+Real assets were found in `~/Downloads/FPRA/` and are in `src/assets/brand/`.
+The site uses the official palette, Montserrat, and the official lockup. FPRA
+Navy `#1d1e4d` appears only at 100% opacity, never tinted, per the guide's
+absolute rule. Details and the compliance notes are in
+`src/assets/brand/README.md`.
+
+### Board roster
+
+Supplied 2026-08-31 and live in `src/data/board.ts` — six members, credentials
+formatted per the guide. Satisfies the annual September 1 review requirement.
+
+### Eventbrite integration
+
+Working and verified against live data.
+
+- **Organization ID `406186576245`** ("FPRA Lake"), not the organizer ID
+  `31488027001` from the original brief. That organizer is a profile label — it
+  exists and is readable but owns no events. It *is* the public archive page,
+  which the Events page now links to.
+- **Token**: `EVENTBRITE_TOKEN`, a repository secret, read from the environment
+  and sent as a Bearer header only. Never in a committed file, never logged —
+  only its length is.
+- **Schedule**: the workflow rebuilds daily at 09:00 UTC, plus on push and on
+  manual dispatch. GitHub may delay scheduled runs under load.
+- **Fallback**: `src/data/events-cache.json` holds the last successful
+  response, committed back by CI after each successful fetch. Any failure —
+  missing token, 401, timeout, malformed payload — logs an `[events]` warning
+  and builds from the cache rather than failing. Every path was tested.
+- **Display**: `/events` shows the 8 most recent past programs (`PAST_LIMIT` in
+  `events.astro`) with the remainder linked to the Eventbrite archive.
