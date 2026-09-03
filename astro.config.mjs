@@ -5,18 +5,13 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
-  // TEMPORARY — serving from the GitHub Pages project subpath while
-  // fpralake.org DNS is sorted out.
+  // Canonical origin. No `base` — the site is served from the domain apex.
   //
-  // TO SWITCH BACK to the custom domain:
-  //   1. site: 'https://fpralake.org'
-  //   2. delete the `base` line below
-  //   3. re-set the Pages custom domain:
-  //      gh api -X PUT repos/KPBJ1991/fpralake-website/pages -f cname=fpralake.org
-  // Internal links go through withBase() in src/lib/url.ts, so they follow
-  // this setting automatically and need no edits either way.
-  site: 'https://kpbj1991.github.io',
-  base: '/fpralake-website',
+  // Internal links go through withBase() in src/lib/url.ts, which reads
+  // import.meta.env.BASE_URL. With no base set that is '/', so it passes paths
+  // through unchanged; if the site ever moves back to a subpath, adding a
+  // `base` line here is the only change needed.
+  site: 'https://fpralake.org',
 
   vite: {
     plugins: [tailwindcss()],
