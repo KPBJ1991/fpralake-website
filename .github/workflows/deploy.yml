@@ -54,8 +54,10 @@ jobs:
         if: github.event_name != 'pull_request'
         run: |
           if [[ -n "$(git status --porcelain src/data/events-cache.json)" ]]; then
-            git config user.name  'github-actions[bot]'
-            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            # Matches the identity used throughout this repo's history, so the
+            # log stays uniform instead of alternating with a bot account.
+            git config user.name  'FPRA Lake Chapter'
+            git config user.email 'fpralake@gmail.com'
             git add src/data/events-cache.json
             # [skip ci] stops this commit from triggering another build.
             git commit -m 'chore: refresh Eventbrite event cache [skip ci]'
