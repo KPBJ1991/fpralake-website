@@ -1,8 +1,16 @@
 {
-  "fetchedAt": "2026-09-29T15:10:24.683Z",
+  "fetchedAt": "2026-09-30T15:25:45.727Z",
   "source": "eventbrite",
   "archiveUrl": "https://www.eventbrite.com/o/fpra-lake-31488027001",
   "events": [
+    {
+      "title": "Where Ideas Grow: Habits & Conditions for Creative Breakthroughs",
+      "date": "2026-10-28",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Lake Sumter State College, Leesburg",
+      "description": "Every communications team says they want bold, breakthrough ideas. But most organizations are unconsciously designed to kill them...",
+      "registerUrl": "https://www.eventbrite.com/e/where-ideas-grow-habits-conditions-for-creative-breakthroughs-tickets-2002624691361"
+    },
     {
       "title": "Paws, Purpose & the Badge: Transforming Community Engagement",
       "date": "2026-09-18",
