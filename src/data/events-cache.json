@@ -1,8 +1,16 @@
 {
-  "fetchedAt": "2026-11-04T16:39:03.378Z",
+  "fetchedAt": "2026-11-05T16:54:21.870Z",
   "source": "eventbrite",
   "archiveUrl": "https://www.eventbrite.com/o/fpra-lake-31488027001",
   "events": [
+    {
+      "title": "Getting to the Core of Your Values",
+      "date": "2026-11-18",
+      "time": "12 p.m. – 1 p.m.",
+      "location": "Lady Lake Public Library",
+      "description": "Challenges participants to \"get to the core of your values\" and explore five critical components: Identifying, authenticating, articulating,",
+      "registerUrl": "https://www.eventbrite.com/e/getting-to-the-core-of-your-values-tickets-2004407597080"
+    },
     {
       "title": "Where Ideas Grow: Habits & Conditions for Creative Breakthroughs",
       "date": "2026-10-28",
